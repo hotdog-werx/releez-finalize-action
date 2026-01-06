@@ -34,15 +34,15 @@ outputs:
   release-preview:
     description: 'The preview output from a dry run. Empty if not a dry run.'
     value: ${{ steps.finalize-release.outputs.release-preview }}
-  semver-tags:
-    description: 'Generated semantic version tags'
-    value: ${{ steps.generate-tags.outputs.semver-tags }}
-  docker-tags:
-    description: 'Generated Docker tags'
-    value: ${{ steps.generate-tags.outputs.docker-tags }}
-  pep440-tags:
-    description: 'Generated PEP440 (Python) tags'
-    value: ${{ steps.generate-tags.outputs.pep440-tags }}
+  semver-versions:
+    description: 'Generated semver versions'
+    value: ${{ steps.generate-tags.outputs.semver-versions }}
+  docker-versions:
+    description: 'Generated Docker versions'
+    value: ${{ steps.generate-tags.outputs.docker-versions }}
+  pep440-versions:
+    description: 'Generated PEP440 (Python) versions'
+    value: ${{ steps.generate-tags.outputs.pep440-versions }}
 
 runs:
   using: 'composite'
