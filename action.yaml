@@ -6,7 +6,7 @@ inputs:
   releez-version:
     description: 'Version of releez to use'
     required: false
-    default: 'b91ec5912338a4cf76715703f8cdc8639313ad8b'
+    default: '0.1.0'
   version-override:
     description: 'Override for the next version, otherwise detect it from the repo context'
     required: false
@@ -14,7 +14,7 @@ inputs:
   alias-tags:
     description: 'Type of alias tags to generate (none, major or minor)'
     required: false
-    default: 'none'
+    default: ''
   dry-run:
     description: 'If true, perform a dry run without tagging the release'
     required: false
@@ -73,9 +73,16 @@ runs:
         #!/bin/bash
         set -euo pipefail
 
-        versionOverrideArgs=()
         if [[ -n "${{ inputs.version-override }}" ]]; then
-          versionOverrideArgs+=(--version-override "${{ inputs.version-override }}")
+          versionOverrideArgs=(--version-override "${{ inputs.version-override }}")
+        else
+          versionOverrideArgs=()
+        fi
+
+        if [[ -n "${{ inputs.alias-tags }}" ]]; then
+          aliasTagsArgs=(--alias-tags "${{ inputs.alias-tags }}")
+        else
+          aliasTagsArgs=()
         fi
 
         releaseNotes=$(uvx releez release notes ${versionOverrideArgs[@]})
@@ -87,8 +94,9 @@ runs:
               echo "EOF"
           } >> $GITHUB_OUTPUT
         else
-          uvx releez release tag --alias-tags "${{ inputs.alias-tags }}" \
+          uvx releez release tag  \
             ${versionOverrideArgs[@]} \
+            ${aliasTagsArgs[@]} \
             --force
           {
               echo "release-preview="
@@ -96,7 +104,7 @@ runs:
         fi
 
         releaseVersion=$(uvx releez version artifact --is-full-release \
-          ${versionOverrideArgs[@]}
+          ${versionOverrideArgs[@]} --alias-tags "none"
         )
 
         {
@@ -113,6 +121,6 @@ runs:
       with:
         releez-version: ${{ inputs.releez-version }}
         is-full-release: true
-        next-version-override: ${{ inputs.next-version-override }}
+        version-override: ${{ inputs.version-override }}
         alias-tags: ${{ inputs.alias-tags }}
         github-token: ${{ inputs.github-token }}
