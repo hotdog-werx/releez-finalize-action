@@ -6,7 +6,7 @@ inputs:
   releez-version:
     description: 'Version of releez to use'
     required: false
-    default: '0.1.0'
+    default: '0.1.2'
   version-override:
     description: 'Override for the next version, otherwise detect it from the repo context'
     required: false
@@ -70,7 +70,7 @@ runs:
     - name: Finalize release
       id: finalize-release
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        RELEEZ_GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         #!/bin/bash
         set -euo pipefail
