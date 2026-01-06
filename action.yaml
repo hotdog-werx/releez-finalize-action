@@ -69,6 +69,8 @@ runs:
 
     - name: Finalize release
       id: finalize-release
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         #!/bin/bash
         set -euo pipefail
