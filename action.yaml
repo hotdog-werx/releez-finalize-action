@@ -96,8 +96,7 @@ runs:
         else
           uvx releez release tag  \
             ${versionOverrideArgs[@]} \
-            ${aliasTagsArgs[@]} \
-            --force
+            ${aliasTagsArgs[@]}
           {
               echo "release-preview="
           } >> $GITHUB_OUTPUT
