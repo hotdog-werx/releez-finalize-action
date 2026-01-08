@@ -32,7 +32,7 @@ jobs:
         id: finalize
         uses: hotdog-werx/releez-finalize-action@v0
         with:
-          releez-version: 0.1.2
+          releez-version: 0.1.3
           dry-run: false
       - name: Show release notes
         run: |
@@ -41,31 +41,33 @@ jobs:
 
 ## Inputs
 
-| Input | Description | Required | Default |
-| --- | --- | --- | --- |
-| `releez-version` | Git ref for `releez` (tag, branch, or SHA). | No | `0.1.2` |
-| `version-override` | Override for the next version. | No | `""` |
-| `alias-versions` | Alias tag strategy: `none`, `major`, or `minor`. | No | `""` |
-| `dry-run` | If `true`, preview the release without tagging. | No | `false` |
-| `github-token` | Token for GitHub authentication. | No | `${{ github.token }}` |
+| Input              | Description                                      | Required | Default               |
+| ------------------ | ------------------------------------------------ | -------- | --------------------- |
+| `releez-version`   | Git ref for `releez` (tag, branch, or SHA).      | No       | `0.1.3`               |
+| `version-override` | Override for the next version.                   | No       | `""`                  |
+| `alias-versions`   | Alias tag strategy: `none`, `major`, or `minor`. | No       | `""`                  |
+| `dry-run`          | If `true`, preview the release without tagging.  | No       | `false`               |
+| `github-token`     | Token for GitHub authentication.                 | No       | `${{ github.token }}` |
 
 Notes:
+
 - Inputs are strings; use `true`/`false` for `dry-run`.
 - `releez-version` is passed as a git ref to `uv tool install`, so use a valid
-  ref for the `releez` repo (for example `0.1.2` or `v0.1.2`, depending on tags).
+  ref for the `releez` repo (for example `0.1.3` or `v0.1.3`, depending on
+  tags).
 - Leave `alias-versions` empty to use repo config; set it explicitly to override
   (for example `none`).
 
 ## Outputs
 
-| Output | Description |
-| --- | --- |
-| `release-version` | The released version string. |
-| `release-notes` | The markdown release notes for the version. |
+| Output            | Description                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `release-version` | The released version string.                                                                                                      |
+| `release-notes`   | The markdown release notes for the version.                                                                                       |
 | `release-preview` | Preview output when `dry-run` is `true`; includes v-prefixed alias tags (for example `v1`, `v1.2`) when enabled; empty otherwise. |
-| `semver-versions` | Semver versions generated for the release. |
-| `docker-versions` | Docker-friendly versions generated for the release. |
-| `pep440-versions` | PEP440 (Python) versions generated for the release. |
+| `semver-versions` | Semver versions generated for the release.                                                                                        |
+| `docker-versions` | Docker-friendly versions generated for the release.                                                                               |
+| `pep440-versions` | PEP440 (Python) versions generated for the release.                                                                               |
 
 ## Dry run example
 
