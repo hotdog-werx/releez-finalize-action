@@ -92,7 +92,9 @@ runs:
         if [[ "${{ inputs.dry-run }}" == "true" ]]; then
           {
               echo "release-preview<<EOF"
-              uvx releez release preview ${versionOverrideArgs[@]}
+              uvx releez release preview \
+                ${versionOverrideArgs[@]} \
+                ${aliasVersionsArgs[@]}
               echo "EOF"
           } >> $GITHUB_OUTPUT
         else
